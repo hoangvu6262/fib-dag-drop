@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { question } from "../data/question.json";
 import { DragWord } from "../constants/type";
-import DropInput from "./DropInput";
 import { motion } from "framer-motion";
-import "../assets/styles/paragraph.scss";
+
+import "@assets/styles/paragraph.scss";
+import ElementEmbed from "./ElementEmbed";
 
 const typeInput = "[_input]";
-const { paragraph, dragWords } = question;
+const { paragraph, blanks, dragWords } = question;
 
 const Paragraph: React.FC = () => {
   const [inputs, setInputs] = useState<{ [key: number]: string }>({});
@@ -14,14 +15,18 @@ const Paragraph: React.FC = () => {
   const [dragWordList, setDraggedWordList] = useState<DragWord[]>(dragWords);
 
   const convertParagraphToInteractive = () => {
+    let blankIndex = 0;
     return paragraph.split(/(\[_input\])/).map((part, index) => {
-      const blankId = Math.floor(index / 2) + 1;
       if (part === typeInput) {
+        const blank = blanks[blankIndex];
+        blankIndex++;
         return (
-          <DropInput
+          <ElementEmbed
             key={index}
-            handleDrop={(e: React.DragEvent) => handleDrop(e, blankId)}
-            value={inputs[blankId] || " "}
+            handleDrop={() => handleDrop(blank.id)}
+            value={inputs[blankIndex] || ""}
+            blank={blank}
+            handleInputChange={handleInputChange}
           />
         );
       }
@@ -29,8 +34,7 @@ const Paragraph: React.FC = () => {
     });
   };
 
-  const handleDrop = (e: React.DragEvent, blankId: number) => {
-    e.preventDefault();
+  const handleDrop = (blankId: number) => {
     const correctBlank = question.blanks.find((blank) => blank.id === blankId);
     if (
       draggedWord &&
@@ -51,22 +55,31 @@ const Paragraph: React.FC = () => {
     setDraggedWord(null);
   };
 
-  const getColor = (color: string) => {
-    switch (color) {
-      case "red":
-        return "red";
-      case "default":
-      default:
-        return "black";
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blankId: number
+  ) => {
+    setInputs((prev) => ({ ...prev, [blankId]: e.target.value.trim() }));
+  };
+
+  const handleSubmit = () => {
+    const correctAnswers = blanks.every((blank) => {
+      return inputs[blank.id] === blank.correctAnswer;
+    });
+
+    if (correctAnswers) {
+      alert("Chính xác!");
+    } else {
+      alert("Sai rồi, thử lại nhé!");
     }
   };
 
   return (
-    <div>
-      <motion.div layout className="paragraph">
+    <div className="paragraph-container">
+      <motion.div layout className="paragraph-container__content">
         {convertParagraphToInteractive()}
       </motion.div>
-      <div>
+      <div className="paragraph-container__words">
         {dragWordList.map((dragWord) => (
           <motion.span
             layout
@@ -77,23 +90,15 @@ const Paragraph: React.FC = () => {
             draggable="true"
             onDragStart={() => setDraggedWord(dragWord)}
             onDragEnd={() => setDraggedWord(null)}
-            style={{
-              display: "inline-block",
-              padding: "10px",
-              margin: "10px",
-              cursor: "grab",
-              backgroundColor: "#f0f0f0",
-              border: "1px solid #ddd",
-              color: getColor(dragWord.color),
-              fontWeight: "bold",
-            }}
+            className="paragraph-container__words-word"
+            color={dragWord.color === "red" ? "red" : "black"}
           >
             {dragWord.word}
           </motion.span>
         ))}
       </div>
 
-      <button onClick={() => console.log(inputs)}>Submit</button>
+      <button onClick={handleSubmit}>Submit</button>
     </div>
   );
 };

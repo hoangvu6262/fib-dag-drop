@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import "../assets/styles/dropInput.scss";
+import "@assets/styles/paragraphDroparea.scss";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
-type DropInputProps = {
+type ParagraphDropareaProps = {
   value: string;
-  handleDrop: (e: React.DragEvent) => void;
+  handleDrop: () => void;
 };
 
-const DropInput: React.FC<DropInputProps> = ({ value, handleDrop }) => {
+const ParagraphDroparea: React.FC<ParagraphDropareaProps> = ({
+  value,
+  handleDrop,
+}) => {
   const [showDrop, setShowDrop] = useState<boolean>(false);
 
   return (
     <motion.span
-      className={clsx("drop-input", { "drop-hover": showDrop })}
+      className={clsx("drop-area", { "drop-hover": showDrop, disabled: value })}
       onDragEnter={() => setShowDrop(true)}
       onDragLeave={() => setShowDrop(false)}
-      onDrop={(e) => {
-        handleDrop(e);
+      onDrop={() => {
+        handleDrop();
         setShowDrop(false);
       }}
       onDragOver={(e) => e.preventDefault()}
@@ -27,4 +30,4 @@ const DropInput: React.FC<DropInputProps> = ({ value, handleDrop }) => {
   );
 };
 
-export default DropInput;
+export default ParagraphDroparea;

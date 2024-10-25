@@ -1,37 +1,57 @@
 import { Blank } from "../constants/type";
-import DropInput from "./DropInput";
+import ParagraphDroparea from "./ParagraphDroparea";
+import ParagraphInput from "./ParagraphInput";
 
 type ElementEmbedProps = {
+  value: string;
   blank: Blank;
   handleDrop: (blankId: number) => void;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blankId: number
+  ) => void;
 };
 
 const ELEMENT_RENDERERS: {
   [key in string]: (
     blank: Blank,
-    handleDrop: (blankId: number) => void
+    handleDrop: (blankId: number) => void,
+    value: string,
+    handleInputChange: (
+      e: React.ChangeEvent<HTMLInputElement>,
+      blankId: number
+    ) => void
   ) => JSX.Element;
 } = {
-  input: (blank) => (
-    <input
-      type="text"
+  input: (blank, handleDrop, value, handleInputChange) => (
+    <ParagraphInput
       key={`blank-${blank.id}`}
-      data-blankid={blank.id}
-      style={{ width: "100px", margin: "0 5px" }}
+      value={value}
+      handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        handleInputChange(e, blank.id)
+      }
+      handleDrop={() => handleDrop(blank.id)}
     />
   ),
 
-  drag: (blank, handleDrop) => (
-    <DropInput blankId={blank.id} handleDrop={() => handleDrop(blank.id)} />
+  drag: (blank, handleDrop, value) => (
+    <ParagraphDroparea
+      key={`blank-${blank.id}`}
+      value={value}
+      handleDrop={() => handleDrop(blank.id)}
+    />
   ),
+  default: () => <></>,
 };
 
 const ElementEmbed = ({
+  value,
   blank,
   handleDrop,
+  handleInputChange,
 }: ElementEmbedProps): JSX.Element => {
-  const renderElement = ELEMENT_RENDERERS[blank.type];
-  return renderElement(blank, handleDrop);
+  const renderElement = ELEMENT_RENDERERS[blank?.type];
+  return renderElement(blank, handleDrop, value, handleInputChange);
 };
 
 export default ElementEmbed;

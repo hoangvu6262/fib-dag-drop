@@ -1,0 +1,21 @@
+.paragraph-input {
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  max-height: 30px;
+  border-radius: 10px;
+  border: 2px solid #fff;
+  margin: 0px 5px;
+  margin-bottom: -12px;
+  text-align: center;
+  font-size: 15px;
+  background-color: transparent;
+  //   color: #fff;
+}
+
+.disabled {
+  pointer-events: none;
+  border: 2px solid #a6a2a2;
+  color: #a6a2a2;
+  background-color: rgb(46, 45, 45);
+}

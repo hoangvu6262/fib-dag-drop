@@ -1,6 +1,6 @@
 {
     "question": {
-      "paragraph": "The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank. The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank. The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank",
+      "paragraph": "The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank.",
       "blanks": [
         {
           "id": 1,

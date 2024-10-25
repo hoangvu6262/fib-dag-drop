@@ -1,7 +1,26 @@
-.paragraph {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: center;
-  //   flex-direction: column;
-  text-align: center;
+.paragraph-container {
+  &__content {
+    padding: 50px 20px;
+  }
+
+  &__words {
+    border-radius: 10px;
+    border: 1px solid #f1f1f1;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &-word {
+      display: inline-block;
+      padding: 10px 30px;
+      margin: 5px;
+      background-color: #f1f1f1;
+      border-radius: 10px;
+      &[color="red"] {
+        color: #e22c2c;
+      }
+      &[color="black"] {
+        color: #000;
+      }
+    }
+  }
 }
