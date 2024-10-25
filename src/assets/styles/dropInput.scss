@@ -1,0 +1,15 @@
+.drop-input {
+  display: inline-block;
+  width: 100px;
+  height: 27px;
+  border: 2px solid #fff;
+  margin: 0px 5px;
+  text-align: center;
+  cursor: grab;
+  opacity: 1;
+  transition: all 0.2s ease-in-out;
+}
+
+.drop-hover {
+  border: 2px solid blue;
+}

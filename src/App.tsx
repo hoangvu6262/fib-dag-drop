@@ -1,9 +1,10 @@
 import "./App.css";
+import Paragraph from "./components/Paragraph";
 
 function App() {
   return (
     <div>
-      <h1>Hello world</h1>
+      <Paragraph />
     </div>
   );
 }
