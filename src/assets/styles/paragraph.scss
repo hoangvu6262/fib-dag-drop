@@ -12,7 +12,7 @@
     &-word {
       display: inline-block;
       padding: 10px 30px;
-      margin: 5px;
+      margin: 5px 15px;
       background-color: #f1f1f1;
       border-radius: 10px;
       &[color="red"] {
@@ -22,5 +22,11 @@
         color: #000;
       }
     }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
   }
 }

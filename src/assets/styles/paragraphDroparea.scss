@@ -1,6 +1,7 @@
 .drop-area {
   display: inline-block;
-  width: 100px;
+  min-width: 120px;
+  max-width: 150px;
   height: 30px;
   max-height: 30px;
   border-radius: 10px;
@@ -9,8 +10,7 @@
   margin-bottom: -12px;
   text-align: center;
   cursor: grab;
-  opacity: 1;
-  transition: all 0.2s ease-in-out;
+  // font-size: 15px;
 }
 
 .drop-hover {
@@ -22,4 +22,16 @@
   border: 2px solid #a6a2a2;
   color: #a6a2a2;
   background-color: rgb(46, 45, 45);
+}
+
+.answer-success {
+  pointer-events: none;
+  border: 2px solid #259c08;
+  background-color: #0795421f;
+}
+
+.answer-danger {
+  pointer-events: none;
+  border: 2px solid #ff0303;
+  background-color: #dc110129;
 }

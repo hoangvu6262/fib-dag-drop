@@ -1,23 +1,32 @@
-import React, { useState } from "react";
-import { question } from "../data/question.json";
-import { DragWord } from "../constants/type";
+import React, { Fragment, useState } from "react";
 import { motion } from "framer-motion";
+import ElementEmbed from "./ElementEmbed";
+import { useNotificationStore } from "../stores/useNotificationStore";
+import { DragWord, NotificationType, Question } from "../constants/type";
+import { EMBEDDED_STRING } from "../constants/general";
 
 import "@assets/styles/paragraph.scss";
-import ElementEmbed from "./ElementEmbed";
+import { isEmptyObject } from "../helpers/emptyOject";
 
-const typeInput = "[_input]";
-const { paragraph, blanks, dragWords } = question;
+type ParagraphProps = {
+  question: Question;
+};
 
-const Paragraph: React.FC = () => {
+const Paragraph: React.FC<ParagraphProps> = ({ question }) => {
+  const { paragraph, blanks, dragWords } = question;
   const [inputs, setInputs] = useState<{ [key: number]: string }>({});
   const [draggedWord, setDraggedWord] = useState<DragWord | null>(null);
   const [dragWordList, setDraggedWordList] = useState<DragWord[]>(dragWords);
+  const [submitted, setSubmitted] = useState(false);
+
+  const addNotification = useNotificationStore(
+    (state) => state.addNotification
+  );
 
   const convertParagraphToInteractive = () => {
     let blankIndex = 0;
     return paragraph.split(/(\[_input\])/).map((part, index) => {
-      if (part === typeInput) {
+      if (part === EMBEDDED_STRING) {
         const blank = blanks[blankIndex];
         blankIndex++;
         return (
@@ -27,6 +36,7 @@ const Paragraph: React.FC = () => {
             value={inputs[blankIndex] || ""}
             blank={blank}
             handleInputChange={handleInputChange}
+            isSubmitted={submitted}
           />
         );
       }
@@ -50,7 +60,7 @@ const Paragraph: React.FC = () => {
         words.filter((word) => word.id !== draggedWord.id)
       );
     } else {
-      alert("Sai từ rồi, hãy thử lại.");
+      addNotification("Wrong word, try again!", NotificationType.WARNING);
     }
     setDraggedWord(null);
   };
@@ -63,43 +73,74 @@ const Paragraph: React.FC = () => {
   };
 
   const handleSubmit = () => {
-    const correctAnswers = blanks.every((blank) => {
-      return inputs[blank.id] === blank.correctAnswer;
-    });
-
-    if (correctAnswers) {
-      alert("Chính xác!");
+    if (Object.keys(inputs).length < blanks.length) {
+      addNotification(
+        "You have to fill all the blanks",
+        NotificationType.WARNING
+      );
     } else {
-      alert("Sai rồi, thử lại nhé!");
+      const correctAnswers = blanks.every((blank) => {
+        return inputs[blank.id] === blank.correctAnswer;
+      });
+
+      if (correctAnswers) {
+        addNotification("Correct!!", NotificationType.SUCCESS);
+      } else {
+        addNotification("Oops, Incorrect!!", NotificationType.ERROR);
+      }
+      setSubmitted(true);
     }
   };
 
-  return (
-    <div className="paragraph-container">
-      <motion.div layout className="paragraph-container__content">
-        {convertParagraphToInteractive()}
-      </motion.div>
-      <div className="paragraph-container__words">
-        {dragWordList.map((dragWord) => (
-          <motion.span
-            layout
-            layoutId={dragWord.word}
-            whileHover={{ scale: 1.2 }}
-            whileTap={{ scale: 1.1 }}
-            key={dragWord.id}
-            draggable="true"
-            onDragStart={() => setDraggedWord(dragWord)}
-            onDragEnd={() => setDraggedWord(null)}
-            className="paragraph-container__words-word"
-            color={dragWord.color === "red" ? "red" : "black"}
-          >
-            {dragWord.word}
-          </motion.span>
-        ))}
-      </div>
+  const handleReset = () => {
+    setInputs({});
+    setDraggedWord(null);
+    setSubmitted(false);
+    setDraggedWordList(dragWords);
+  };
 
-      <button onClick={handleSubmit}>Submit</button>
-    </div>
+  return (
+    <Fragment>
+      <div className="paragraph-container">
+        <motion.div layout className="paragraph-container__content">
+          {convertParagraphToInteractive()}
+        </motion.div>
+        <div className="paragraph-container__words">
+          {dragWordList.map((dragWord) => (
+            <motion.span
+              layout
+              layoutId={dragWord.id.toString()}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 1.1 }}
+              key={dragWord.id}
+              draggable="true"
+              onDragStart={() => setDraggedWord(dragWord)}
+              onDragEnd={() => setDraggedWord(null)}
+              className="paragraph-container__words-word"
+              color={dragWord.color === "red" ? "red" : "black"}
+            >
+              {dragWord.word}
+            </motion.span>
+          ))}
+        </div>
+        <div className="paragraph-container__buttons">
+          <button
+            onClick={handleReset}
+            className="paragraph-container__buttons-reset"
+            disabled={!submitted && isEmptyObject(inputs)}
+          >
+            {submitted ? "Try again" : "Reset"}
+          </button>
+          <button
+            disabled={submitted}
+            onClick={handleSubmit}
+            className="paragraph-container__buttons-submit"
+          >
+            Submit
+          </button>
+        </div>
+      </div>
+    </Fragment>
   );
 };
 

@@ -6,12 +6,16 @@ type ParagraphInput = {
   value: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleDrop: () => void;
+  isSubmitted: boolean;
+  correctAnswer: string;
 };
 
 const ParagraphInput: React.FC<ParagraphInput> = ({
   value,
   handleInputChange,
   handleDrop,
+  isSubmitted,
+  correctAnswer,
 }) => {
   return (
     <Fragment>
@@ -20,7 +24,11 @@ const ParagraphInput: React.FC<ParagraphInput> = ({
         placeholder="input"
         value={value}
         onChange={handleInputChange}
-        className={clsx("paragraph-input", { disabled: !!value })}
+        className={clsx("paragraph-input", {
+          disabled: !isSubmitted && !!value,
+          "answer-success": isSubmitted && value === correctAnswer,
+          "answer-danger": isSubmitted && value !== correctAnswer,
+        })}
         onDrop={() => handleDrop()}
         onDragOver={(e) => e.preventDefault()}
       />
