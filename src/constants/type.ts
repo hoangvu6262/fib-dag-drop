@@ -3,7 +3,7 @@ export type Blank = {
   position: string;
   correctAnswer: string;
   type: string;
-  options?: string[]; // Optional for drop-down
+  options?: string[];
 };
 
 export type DragWord = {

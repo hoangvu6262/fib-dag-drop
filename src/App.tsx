@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./App.css";
+import "./App.scss";
 import Paragraph from "./components/Paragraph";
 import { NotificationType, QuestionData } from "./constants/type";
 import Notifications from "./components/Notification";
@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const response = await fetch("src/data/question.json", {
+        const response = await fetch("/data/question.json", {
           headers: {
             "Content-Type": "application/json",
             Accept: "application/json",
