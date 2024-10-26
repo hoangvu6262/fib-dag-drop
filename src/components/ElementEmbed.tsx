@@ -32,20 +32,14 @@ const ELEMENT_RENDERERS: {
     isSubmitted: boolean;
   }) => JSX.Element;
 } = {
-  [BlankTypes.INPUT]: ({
-    blank,
-    handleDrop,
-    value,
-    handleInputChange,
-    isSubmitted,
-  }) => (
+  [BlankTypes.INPUT]: ({ blank, value, handleInputChange, isSubmitted }) => (
     <ParagraphInput
       key={`blank-${blank.id}`}
       value={value}
       handleInputChange={(e: React.ChangeEvent<HTMLInputElement>) =>
         handleInputChange(e, blank.id)
       }
-      handleDrop={() => handleDrop(blank.id)}
+      // handleDrop={() => handleDrop(blank.id)}
       isSubmitted={isSubmitted}
       correctAnswer={blank.correctAnswer}
     />

@@ -5,7 +5,7 @@ import clsx from "clsx";
 type ParagraphInput = {
   value: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleDrop: () => void;
+  // handleDrop: () => void;
   isSubmitted: boolean;
   correctAnswer: string;
 };
@@ -13,7 +13,7 @@ type ParagraphInput = {
 const ParagraphInput: React.FC<ParagraphInput> = ({
   value,
   handleInputChange,
-  handleDrop,
+  // handleDrop,
   isSubmitted,
   correctAnswer,
 }) => {
@@ -29,8 +29,8 @@ const ParagraphInput: React.FC<ParagraphInput> = ({
           "answer-success": isSubmitted && value === correctAnswer,
           "answer-danger": isSubmitted && value !== correctAnswer,
         })}
-        onDrop={() => handleDrop()}
-        onDragOver={(e) => e.preventDefault()}
+        // onDrop={() => handleDrop()}
+        // onDragOver={(e) => e.preventDefault()}
       />
     </Fragment>
   );
