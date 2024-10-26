@@ -5,4 +5,6 @@ enum BlankTypes {
   TEXT = "text",
 }
 
-export { BlankTypes };
+const EMBEDDED_STRING = "[_input]";
+
+export { BlankTypes, EMBEDDED_STRING };

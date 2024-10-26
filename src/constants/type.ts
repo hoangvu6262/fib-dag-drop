@@ -21,3 +21,10 @@ export type Question = {
 export type QuestionData = {
   question: Question;
 };
+
+export enum NotificationType {
+  SUCCESS = "success",
+  ERROR = "error",
+  INFO = "info",
+  WARNING = "warning",
+}
