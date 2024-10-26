@@ -1,0 +1,77 @@
+.notifications-container {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notification {
+  min-width: 200px;
+  max-width: 400px;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 4px 6px #0000001a;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  p {
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+  }
+
+  button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 15px;
+    padding: 0;
+  }
+
+  &.success {
+    border: 1px solid #24f10675;
+    background-color: #0795421f;
+    box-shadow: 0px 0px 2px #259c08;
+    color: #0ad406;
+    button {
+      color: #0ad406;
+    }
+  }
+
+  &.error {
+    border: 1px solid #f10606cf;
+    background-color: #dc110129;
+    box-shadow: 0px 0px 2px #ff0303;
+    color: #ff0303;
+
+    button {
+      color: #ff0303;
+    }
+  }
+
+  &.info {
+    border: 1px solid #062cf175;
+    background-color: #0749951f;
+    box-shadow: 0px 0px 2px #0396ff;
+    color: #0396ff;
+
+    button {
+      color: #0396ff;
+    }
+  }
+
+  &.warning {
+    border: 1px solid #f18e06cf;
+    background-color: #dc800129;
+    box-shadow: 0px 0px 2px #ffb103;
+    color: #ffb103;
+
+    button {
+      color: #ffb103;
+    }
+  }
+}
