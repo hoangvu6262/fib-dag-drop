@@ -1,3 +1,4 @@
+import { BlankTypes } from "../constants/general";
 import { Blank } from "../constants/type";
 import ParagraphDroparea from "./ParagraphDroparea";
 import ParagraphInput from "./ParagraphInput";
@@ -10,20 +11,34 @@ type ElementEmbedProps = {
     e: React.ChangeEvent<HTMLInputElement>,
     blankId: number
   ) => void;
+  isSubmitted: boolean;
 };
 
 const ELEMENT_RENDERERS: {
-  [key in string]: (
-    blank: Blank,
-    handleDrop: (blankId: number) => void,
-    value: string,
+  [key in string]: ({
+    blank,
+    value,
+    handleDrop,
+    handleInputChange,
+    isSubmitted,
+  }: {
+    blank: Blank;
+    handleDrop: (blankId: number) => void;
+    value: string;
     handleInputChange: (
       e: React.ChangeEvent<HTMLInputElement>,
       blankId: number
-    ) => void
-  ) => JSX.Element;
+    ) => void;
+    isSubmitted: boolean;
+  }) => JSX.Element;
 } = {
-  input: (blank, handleDrop, value, handleInputChange) => (
+  [BlankTypes.INPUT]: ({
+    blank,
+    handleDrop,
+    value,
+    handleInputChange,
+    isSubmitted,
+  }) => (
     <ParagraphInput
       key={`blank-${blank.id}`}
       value={value}
@@ -31,14 +46,18 @@ const ELEMENT_RENDERERS: {
         handleInputChange(e, blank.id)
       }
       handleDrop={() => handleDrop(blank.id)}
+      isSubmitted={isSubmitted}
+      correctAnswer={blank.correctAnswer}
     />
   ),
 
-  drag: (blank, handleDrop, value) => (
+  [BlankTypes.DRAG]: ({ blank, handleDrop, value, isSubmitted }) => (
     <ParagraphDroparea
       key={`blank-${blank.id}`}
       value={value}
       handleDrop={() => handleDrop(blank.id)}
+      isSubmitted={isSubmitted}
+      correctAnswer={blank.correctAnswer}
     />
   ),
   default: () => <></>,
@@ -49,9 +68,16 @@ const ElementEmbed = ({
   blank,
   handleDrop,
   handleInputChange,
+  isSubmitted,
 }: ElementEmbedProps): JSX.Element => {
   const renderElement = ELEMENT_RENDERERS[blank?.type];
-  return renderElement(blank, handleDrop, value, handleInputChange);
+  return renderElement({
+    blank,
+    handleDrop,
+    value,
+    handleInputChange,
+    isSubmitted,
+  });
 };
 
 export default ElementEmbed;
