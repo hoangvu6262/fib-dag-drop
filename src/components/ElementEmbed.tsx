@@ -21,16 +21,7 @@ const ELEMENT_RENDERERS: {
     handleDrop,
     handleInputChange,
     isSubmitted,
-  }: {
-    blank: Blank;
-    handleDrop: (blankId: number) => void;
-    value: string;
-    handleInputChange: (
-      e: React.ChangeEvent<HTMLInputElement>,
-      blankId: number
-    ) => void;
-    isSubmitted: boolean;
-  }) => JSX.Element;
+  }: ElementEmbedProps) => JSX.Element;
 } = {
   [BlankTypes.INPUT]: ({ blank, value, handleInputChange, isSubmitted }) => (
     <ParagraphInput

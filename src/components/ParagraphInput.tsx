@@ -1,6 +1,7 @@
 import React, { Fragment } from "react";
 import "@assets/styles/paragraphInput.scss";
 import clsx from "clsx";
+import { compareStringValue } from "../helpers/formatValue";
 
 type ParagraphInput = {
   value: string;
@@ -25,9 +26,11 @@ const ParagraphInput: React.FC<ParagraphInput> = ({
         value={value}
         onChange={handleInputChange}
         className={clsx("paragraph-input", {
-          disabled: !isSubmitted && !!value,
-          "answer-success": isSubmitted && value === correctAnswer,
-          "answer-danger": isSubmitted && value !== correctAnswer,
+          // disabled: !isSubmitted && !!value,
+          "answer-success":
+            isSubmitted && compareStringValue(value, correctAnswer),
+          "answer-danger":
+            isSubmitted && !compareStringValue(value, correctAnswer),
         })}
         // onDrop={() => handleDrop()}
         // onDragOver={(e) => e.preventDefault()}
