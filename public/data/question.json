@@ -1,6 +1,6 @@
 {
     "question": {
-      "paragraph": "The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank.",
+      "paragraph": "The sky is [_input] and the grass is [_input]. You should drag the word <span style='color: red;'>green</span> to the correct blank. The tea is lorem The tea is lorem You should drag the word <span style='color: red;'>green</span> to the correct blank [_input], The tea is lorem.",
       "blanks": [
         {
           "id": 1,
@@ -13,6 +13,26 @@
           "position": "second",
           "correctAnswer": "green",
           "type": "drag"
+        },
+        {
+          "id": 3,
+          "position": "third",
+          "correctAnswer": "yellow",
+          "type": "drop-down",
+          "options": [
+            {
+              "id": 1,
+              "option": "green"
+            },
+            {
+              "id": 2,
+              "option": "red"
+            },
+            {
+              "id": 3,
+              "option": "yellow"
+            }
+          ]
         }
       ],
       "dragWords": [

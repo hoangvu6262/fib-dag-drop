@@ -1,9 +1,14 @@
+export type option = {
+  id: number;
+  option: string;
+};
+
 export type Blank = {
   id: number;
   position: string;
   correctAnswer: string;
   type: string;
-  options?: string[];
+  options?: option[];
 };
 
 export type DragWord = {

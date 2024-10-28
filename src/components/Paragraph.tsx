@@ -40,7 +40,13 @@ const Paragraph: React.FC<ParagraphProps> = ({ question }) => {
           />
         );
       }
-      return <span key={index} dangerouslySetInnerHTML={{ __html: part }} />;
+      return (
+        <span
+          key={index}
+          dangerouslySetInnerHTML={{ __html: part }}
+          className="paragraph-container__content-span"
+        />
+      );
     });
   };
 
@@ -66,7 +72,7 @@ const Paragraph: React.FC<ParagraphProps> = ({ question }) => {
   };
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     blankId: number
   ) => {
     setInputs((prev) => ({ ...prev, [blankId]: e.target.value.trim() }));

@@ -1,8 +1,8 @@
-.paragraph-input {
+.select-container {
   display: inline-block;
-  width: 120px;
-  height: 30px;
-  max-height: 25px;
+  width: 150px;
+  height: 25px;
+  max-height: 30px;
   border-radius: 10px;
   border: 2px solid #fff;
   margin: 0px 5px;
@@ -10,14 +10,6 @@
   text-align: center;
   font-size: 15px;
   background-color: transparent;
-  //   color: #fff;
-}
-
-.disabled {
-  pointer-events: none;
-  border: 2px solid #a6a2a2;
-  color: #a6a2a2;
-  background-color: rgb(46, 45, 45);
 }
 
 .answer-success {

@@ -1,6 +1,10 @@
 .paragraph-container {
   &__content {
     padding: 50px 20px;
+
+    &-span {
+      line-height: 40px;
+    }
   }
 
   &__words {
